@@ -1,0 +1,73 @@
+Step 1: Ensure/Double Check Permissions on Sensitive Files
+
+Permissions on /etc/shadow:
+ls -l /etc/shadow
+
+Command to set permissions (if needed):
+sudo chmod go-rwx /etc/shadow
+
+Permissions on /etc/gshadow:
+ls -l /etc/gshadow
+
+Command to set permissions (if needed):
+sudo chmod go-rwx /etc/gshadow
+
+Permissions on /etc/group:
+ls -l /etc/group
+
+Command to set permissions (if needed):
+sudo chmod 644 /etc/group
+
+Permissions on /etc/passwd:
+ls -l /etc/passwd
+
+Command to set permissions (if needed):
+sudo chmod 644 /etc/passwd
+
+Step 2: Create User Accounts
+Add user accounts for sam, joe, amy, sara, and admin1:
+
+sudo useradd sam
+sudo useradd joe
+sudo useradd amy
+sudo useradd sara
+sudo useradd admin1
+
+Ensure only admin1 has general sudo access:
+sudo usermod -aG sudo admin1
+
+Step 3: Create User Group and Collaborative Folder
+
+Add an engineers group to the system:
+sudo addgroup engineers
+
+Add users sam, joe, amy, and sara to the engineers group:
+
+sudo usermod -aG engineers sam
+sudo usermod -aG engineers joe
+sudo usermod -aG engineers amy
+sudo usermod -aG engineers sara
+
+Create a shared folder for engineers at /home/engineers:
+sudo mkdir /home/engineers
+
+Change ownership of the engineers' shared folder to the engineers group:
+sudo chown :engineers /home/engineers
+
+Step 4: Lynis Auditing
+Install Lynis:
+sudo apt install lynis
+
+Run an audit with Lynis:
+sudo lynis audit system
+
+Note: Follow the prompts and recommendations from Lynis audit output to address system hardening.
+Optional Additional Challenge
+
+Install chkrootkit:
+sudo apt install chkrootkit
+
+Run chkrootkit in expert mode for detailed output:
+sudo chkrootkit -x
+
+Note: Review the chkrootkit output for any suspicious findings and follow any recommendations for system hardening.
